@@ -1,37 +1,102 @@
 html {
   font-family: sans-serif;
+  color: #020617;
 }
 
-/* Table Styles */
-
-table {
-  border-collapse: collapse;
-  border: 2px solid rgb(200,200,200);
-  letter-spacing: 1px;
-  font-size: 0.8rem;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-td, th {
-  border: 1px solid rgb(190,190,190);
-  padding: 10px 20px;
+.page {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
 }
 
-th {
-  background-color: rgb(235,235,235);
+.sidebar {
+  grid-column: 1;
+
+  min-width: 250px;
+  min-height: 100vh;
+
+  background-color: #cbd5e1;
 }
 
-td {
+form {
+  display: none;
+}
+
+label {
+  display: block;
+  margin-left: 20px;
+  margin-top: 30px;
+}
+
+input {
+  width: 80%;
+  padding: 5px;
+  margin: 5px 20px;
+}
+
+.card-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 100px;
+
+  font-size: 24px;
+}
+
+.card {
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+
+    padding: 20px;
+    margin: 20px;
+    width: 325px; 
+}
+
+.card-section {
+  margin: 10px 0;
+  padding: 5px;
+  border-bottom: 2px solid #ddd;
+}
+
+
+/* Buttons */
+
+.btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.button {
+  background: #fff;
+  border-radius: .375rem;
+  border-style: solid;
+  border-width: .125rem;
+  color: #212121;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 1.125rem;
+  font-weight: 700;
+  padding: .875rem 1.125rem;
   text-align: center;
+
+  width: 60%;
 }
 
-tr:nth-child(even) td {
-  background-color: rgb(250,250,250);
+.button-small {
+  width: 42.5%;
+  margin-left: 20px;
+  margin-top: 10px;
 }
 
-tr:nth-child(odd) td {
-  background-color: rgb(245,245,245);
-}
-
-caption {
-  padding: 10px;
+.button-small:last-of-type {
+  margin-left: 0;
 }
