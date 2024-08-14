@@ -35,6 +35,15 @@ form.addEventListener('submit', (e) => {
 
 document.addEventListener("DOMContentLoaded", generateCards);
 
+// Delete book
+
+function deleteBook(event) {
+
+  let index = event.target.parentElement.dataset.number;
+  myLibrary.splice(index, 1);
+  generateCards();
+}
+
 // Add new book
 
 button.addEventListener('click', addBookToLibrary);
@@ -63,36 +72,51 @@ function addBookToLibrary() {
 const cardContainer = document.querySelector('#card-container');
 
 
-
 function generateCards() {
   cardContainer.innerHTML = '';
+  let numberOfCards = 0;
 
   myLibrary.forEach((book) => {
-  const card = document.createElement('div');
-  card.classList.add('card');
 
-  const parTitle = document.createElement('p');
-  parTitle.classList.add('card-section');
-  parTitle.textContent = 'Title: ' + book.title;
-  card.append(parTitle);
+    const card = document.createElement('div');
+    card.classList.add('card');
 
-  const parAuthor = document.createElement('p');
-  parAuthor.classList.add('card-section');
-  parAuthor.textContent = 'Author: ' + book.author;
-  card.append(parAuthor);
+    card.setAttribute('data-number', numberOfCards++);
 
-  const parPages = document.createElement('p');
-  parPages.classList.add('card-section');
+    const button = document.createElement('button');
+    button.textContent = 'DELETE';
+    button.classList.add('delete-icon');
+    card.append(button);
+
+    const parTitle = document.createElement('p');
+    parTitle.classList.add('card-section');
+    parTitle.textContent = 'Title: ' + book.title;
+    card.append(parTitle);
+
+    const parAuthor = document.createElement('p');
+    parAuthor.classList.add('card-section');
+    parAuthor.textContent = 'Author: ' + book.author;
+    card.append(parAuthor);
+
+    const parPages = document.createElement('p');
+    parPages.classList.add('card-section');
     parPages.textContent = 'Pages: ' + book.pages;
-  card.append(parPages);
-  
-  const parYouRead = document.createElement('p');
-  parYouRead.classList.add('card-section');
-    parYouRead.textContent = 'Read: ' + book.youRead;
-  card.append(parYouRead);  
+    card.append(parPages);
 
-  cardContainer.append(card);
-})
+    const parYouRead = document.createElement('p');
+    parYouRead.classList.add('card-section');
+    parYouRead.textContent = 'Read: ' + book.youRead;
+    card.append(parYouRead);
+
+    cardContainer.append(card);
+
+  })
+
+  numberOfCards = 0;
+  const deleteButton = document.querySelectorAll('.delete-icon');
+  deleteButton.forEach((button) => {
+    button.addEventListener('click', deleteBook);
+  })
 }
 
 // Button 'NEW BOOK'

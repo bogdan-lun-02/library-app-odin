@@ -1,102 +1,116 @@
 html {
-  font-family: sans-serif;
-  color: #020617;
+	font-family: sans-serif;
+	color: #020617;
 }
 
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
 }
 
 .page {
-  display: grid;
-  grid-template-columns: 1fr 3fr;
+	display: grid;
+	grid-template-columns: 1fr 3fr;
 }
 
 .sidebar {
-  grid-column: 1;
+	grid-column: 1;
 
-  min-width: 250px;
-  min-height: 100vh;
+	min-width: 250px;
+	min-height: 100vh;
 
-  background-color: #cbd5e1;
+	background-color: #cbd5e1;
 }
 
 form {
-  display: none;
+	display: none;
 }
 
 label {
-  display: block;
-  margin-left: 20px;
-  margin-top: 30px;
+	display: block;
+	margin-left: 20px;
+	margin-top: 30px;
 }
 
 input {
-  width: 80%;
-  padding: 5px;
-  margin: 5px 20px;
+	width: 80%;
+	padding: 5px;
+	margin: 5px 20px;
 }
 
 .card-container {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin-top: 100px;
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+	margin-top: 100px;
 
-  font-size: 24px;
+	font-size: 24px;
 }
 
 .card {
-    background-color: #f0f0f0;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
+	background-color: #f0f0f0;
+	border: 1px solid #ddd;
+	border-radius: 8px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	overflow: hidden;
 
-    padding: 20px;
-    margin: 20px;
-    width: 325px; 
+	padding: 20px;
+	margin: 20px;
+	width: 325px;
+  max-height: 50%;
+  position: relative;
 }
 
 .card-section {
-  margin: 10px 0;
-  padding: 5px;
-  border-bottom: 2px solid #ddd;
+	margin: 10px 0;
+	padding: 5px;
+	border-bottom: 2px solid #ddd;
 }
-
 
 /* Buttons */
 
 .btn {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	margin-top: 20px;
 }
 
 .button {
-  background: #fff;
-  border-radius: .375rem;
-  border-style: solid;
-  border-width: .125rem;
-  color: #212121;
-  cursor: pointer;
-  display: inline-block;
-  font-size: 1.125rem;
-  font-weight: 700;
-  padding: .875rem 1.125rem;
-  text-align: center;
+	background: #fff;
+	border-radius: 0.375rem;
+	border-style: solid;
+	border-width: 0.125rem;
+	color: #212121;
+	cursor: pointer;
+	display: inline-block;
+	font-size: 1.125rem;
+	font-weight: 700;
+	padding: 0.875rem 1.125rem;
+	text-align: center;
 
-  width: 60%;
+	width: 60%;
 }
 
 .button-small {
-  width: 42.5%;
-  margin-left: 20px;
-  margin-top: 10px;
+	width: 42.5%;
+	margin-left: 20px;
+	margin-top: 10px;
 }
 
-.button-small:last-of-type {
-  margin-left: 0;
+.delete-icon {
+	background-color: #ff4d4d;
+	color: white;
+	border: none;
+	padding: 5px 10px;
+	cursor: pointer;
+
+  position: relative;
+  left: 75%;
+}
+
+.delete-icon:hover {
+	background-color: #ff0000;
 }
