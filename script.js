@@ -27,13 +27,24 @@ myLibrary.push(thisPerfectDay);
 myLibrary.push(theWindUpGirl);
 myLibrary.push(stainlessSteelRat);
 
+
+// Elements with listeners
+
+const newBookBtn = document.querySelector('#new-book-btn');
 const button = document.getElementById('button');
 const form = document.querySelector('form');
+const cardContainer = document.querySelector('#card-container');
+
+
+
+document.addEventListener("DOMContentLoaded", generateCards);
+button.addEventListener('click', addBookToLibrary);
 form.addEventListener('submit', (e) => {
   e.preventDefault();
 })
-
-document.addEventListener("DOMContentLoaded", generateCards);
+newBookBtn.addEventListener('click', () => {
+  form.style.display = 'block';
+})
 
 // Delete book
 
@@ -44,9 +55,15 @@ function deleteBook(event) {
   generateCards();
 }
 
-// Add new book
+// Read Book
 
-button.addEventListener('click', addBookToLibrary);
+function changeReadStatus(event) {
+  let index = event.target.parentElement.dataset.number;
+  myLibrary[index].youRead = 'yes';
+  generateCards();
+}
+
+// Add new book
 
 function addBookToLibrary() {
 
@@ -62,15 +79,19 @@ function addBookToLibrary() {
   let pages = document.querySelector('#pages').value;
   let youRead = document.querySelector('#youRead').value;
 
+  if (youRead === 'true') {
+    youRead = 'yes';
+  } else youRead = 'no'
+
+
   let book1 = new Book(title, author, pages, youRead);
   myLibrary.push(book1);
+
   generateCards();
 }
 
 
-// Generating cards
-const cardContainer = document.querySelector('#card-container');
-
+// Generate cards
 
 function generateCards() {
   cardContainer.innerHTML = '';
@@ -87,6 +108,11 @@ function generateCards() {
     button.textContent = 'DELETE';
     button.classList.add('delete-icon');
     card.append(button);
+
+    const button2 = document.createElement('button');
+    button2.textContent = 'READ';
+    button2.classList.add('read-icon');
+    card.append(button2);
 
     const parTitle = document.createElement('p');
     parTitle.classList.add('card-section');
@@ -117,11 +143,9 @@ function generateCards() {
   deleteButton.forEach((button) => {
     button.addEventListener('click', deleteBook);
   })
+
+  const readButton = document.querySelectorAll('.read-icon');
+  readButton.forEach((button) => {
+    button.addEventListener('click', changeReadStatus);
+  })
 }
-
-// Button 'NEW BOOK'
-
-const newBookBtn = document.querySelector('#new-book-btn');
-newBookBtn.addEventListener('click', () => {
-  form.style.display = 'block';
-})
