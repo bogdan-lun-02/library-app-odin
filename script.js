@@ -1,151 +1,139 @@
-// Library files
+// query selectors 
 
-const myLibrary = [];
-
-const thisPerfectDay = {
-  title: 'This perfect day',
-  author: 'Ira Levin',
-  pages: '300 pages',
-  youRead: 'yes',
-}
-
-const theWindUpGirl = {
-  title: 'The Windup Girl',
-  author: 'Paolo Bacigalupi',
-  pages: '400 pages',
-  youRead: 'yes',
-}
-
-const stainlessSteelRat = {
-  title: 'A Stainless Steel Rat is Born',
-  author: 'Harry Harrison',
-  pages: '250 pages',
-  youRead: 'no',
-}
-
-myLibrary.push(thisPerfectDay);
-myLibrary.push(theWindUpGirl);
-myLibrary.push(stainlessSteelRat);
-
-
-// Elements with listeners
-
-const newBookBtn = document.querySelector('#new-book-btn');
-const button = document.getElementById('button');
+const cardContainer = document.querySelector('.card-container');
+const newBookBtn = document.querySelector('.button');
 const form = document.querySelector('form');
-const cardContainer = document.querySelector('#card-container');
+const inputTitle = document.querySelector('#title');
+const inputAuthor = document.querySelector('#author');
+const inputPages = document.querySelector('#pages');
+const inputReadStatus = document.querySelector('#youRead');
+const addBtn = document.querySelector('#button');
 
 
+// event listeners
 
-document.addEventListener("DOMContentLoaded", generateCards);
-button.addEventListener('click', addBookToLibrary);
-form.addEventListener('submit', (e) => {
-  e.preventDefault();
-})
+document.addEventListener('DOMContentLoaded', displayBooks);
+
 newBookBtn.addEventListener('click', () => {
-  form.style.display = 'block';
+  form.classList.toggle('show-form');
 })
 
-// Delete book
+addBtn.addEventListener('click', addBookToLibrary);
 
-function deleteBook(event) {
 
-  let index = event.target.parentElement.dataset.number;
-  myLibrary.splice(index, 1);
-  generateCards();
-}
+// Book class
 
-// Read Book
-
-function changeReadStatus(event) {
-  let index = event.target.parentElement.dataset.number;
-  myLibrary[index].youRead = 'yes';
-  generateCards();
-}
-
-// Add new book
-
-function addBookToLibrary() {
-
-  function Book() {
+class Book {
+  constructor(title, author, pages, readStatus) {
     this.title = title;
     this.author = author;
     this.pages = pages;
-    this.youRead = youRead;
+    if (readStatus) {
+      this.readStatus = 'read it'
+    } else this.readStatus = 'not read yet'
   }
 
-  let title = document.querySelector('#title').value;
-  let author = document.querySelector('#author').value;
-  let pages = document.querySelector('#pages').value;
-  let youRead = document.querySelector('#youRead').value;
-
-  if (youRead === 'true') {
-    youRead = 'yes';
-  } else youRead = 'no'
-
-
-  let book1 = new Book(title, author, pages, youRead);
-  myLibrary.push(book1);
-
-  generateCards();
+  toggleReadStatus() {
+    if (this.readStatus === 'read it') {
+      this.readStatus = 'not read yet'
+    } else {
+      this.readStatus = 'read it'
+    };
+    cardContainer.innerHTML = '';
+    displayBooks();
+  }
 }
 
+// Hobbit file
 
-// Generate cards
+const myLibrary = [];
+let theHobbit = new Book('The Hobbit', 'J.R.R Tolkien', 255, true);
 
-function generateCards() {
+myLibrary.push(theHobbit);
+
+// add book to library
+
+function addBookToLibrary(event) {
+  event.preventDefault();
+
+  let title = inputTitle.value;
+  let author = inputAuthor.value;
+  let pages = inputPages.value;
+  let readStatus = '';
+  if (inputReadStatus.value === 'true') {
+    readStatus = true;
+  } else readStatus = false;
+
+
+
+  const book = new Book(title, author, pages, readStatus);
+  myLibrary.push(book);
   cardContainer.innerHTML = '';
-  let numberOfCards = 0;
+  displayBooks();
+}
 
-  myLibrary.forEach((book) => {
+// display books
+
+function displayBooks() {
+
+  let index = 0;
+
+  myLibrary.forEach(book => {
 
     const card = document.createElement('div');
+    card.setAttribute('data-index-number', index);
     card.classList.add('card');
+    cardContainer.appendChild(card);
 
-    card.setAttribute('data-number', numberOfCards++);
+    index++;
 
-    const button = document.createElement('button');
-    button.textContent = 'DELETE';
-    button.classList.add('delete-icon');
-    card.append(button);
+    const del = document.createElement('button');
+    del.classList.add('delete-icon');
+    del.textContent = 'DELETE';
+    card.appendChild(del);
 
-    const button2 = document.createElement('button');
-    button2.textContent = 'READ';
-    button2.classList.add('read-icon');
-    card.append(button2);
+    const read = document.createElement('button');
+    read.classList.add('read-icon');
+    read.textContent = 'READ';
+    card.appendChild(read);
 
-    const parTitle = document.createElement('p');
-    parTitle.classList.add('card-section');
-    parTitle.textContent = 'Title: ' + book.title;
-    card.append(parTitle);
+    const bookTitle = document.createElement('p');
+    bookTitle.textContent = `Title: ${book.title}`;
+    bookTitle.classList.add('card-section');
+    card.appendChild(bookTitle);
 
-    const parAuthor = document.createElement('p');
-    parAuthor.classList.add('card-section');
-    parAuthor.textContent = 'Author: ' + book.author;
-    card.append(parAuthor);
+    const bookAuthor = document.createElement('p');
+    bookAuthor.textContent = `Author: ${book.author}`;
+    bookAuthor.classList.add('card-section');
+    card.appendChild(bookAuthor);
 
-    const parPages = document.createElement('p');
-    parPages.classList.add('card-section');
-    parPages.textContent = 'Pages: ' + book.pages;
-    card.append(parPages);
+    const bookPages = document.createElement('p');
+    bookPages.textContent = `Pages: ${book.pages}`;
+    bookPages.classList.add('card-section');
+    card.appendChild(bookPages);
 
-    const parYouRead = document.createElement('p');
-    parYouRead.classList.add('card-section');
-    parYouRead.textContent = 'Read: ' + book.youRead;
-    card.append(parYouRead);
+    const bookReadStatus = document.createElement('p');
+    bookReadStatus.textContent = `Read status: ${book.readStatus}`;
+    bookReadStatus.classList.add('card-section');
+    card.appendChild(bookReadStatus);
 
-    cardContainer.append(card);
+    // delete book
 
-  })
+    card.addEventListener("click", (event) => {
+      if (event.target.classList.contains("delete-icon")) {
 
-  numberOfCards = 0;
-  const deleteButton = document.querySelectorAll('.delete-icon');
-  deleteButton.forEach((button) => {
-    button.addEventListener('click', deleteBook);
-  })
+        myLibrary.splice(event.target.parentElement.dataset.indexNumber, 1);
+        cardContainer.innerHTML = '';
+        displayBooks();
+      }
+    });
 
-  const readButton = document.querySelectorAll('.read-icon');
-  readButton.forEach((button) => {
-    button.addEventListener('click', changeReadStatus);
+    // change read status
+
+    card.addEventListener("click", (event) => {
+      if (event.target.classList.contains("read-icon")) {
+        myLibrary[event.target.parentElement.dataset.indexNumber].toggleReadStatus();
+      }
+    });
   })
 }
